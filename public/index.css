@@ -49,14 +49,6 @@ ul {
 }
 
 /* Columns */
-.drag-column {
-
-  margin: 0 10px;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  overflow-x: hidden;
-}
 
 .backlog-column .header,
 .backlog-column .solid,
@@ -89,7 +81,7 @@ ul {
 /* Custom Scrollbar */
 .custom-scroll {
   overflow-y: auto;
-  max-height: 75vh;
+  max-height: 65vh;
 }
 
 .custom-scroll::-webkit-scrollbar-track {

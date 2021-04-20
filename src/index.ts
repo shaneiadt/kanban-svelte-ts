@@ -1,4 +1,4 @@
-import App from "./App.svelte";
+import App from "./components/App/App.svelte";
 import "./styles/Tailwind.css";
 
 var app = new App({

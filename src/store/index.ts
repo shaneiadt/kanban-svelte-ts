@@ -87,7 +87,11 @@ function createStore() {
     const { subscribe, set, update } = writable(getData());
 
     return {
-        subscribe
+        subscribe,
+        updateBoard: (newBoard: Column[]) => {
+            updateData(newBoard);
+            update(board => board = newBoard);
+        }
     };
 }
 

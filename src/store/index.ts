@@ -84,12 +84,12 @@ const defaultData: Column[] = [
 ];
 
 function createStore() {
-    const { subscribe, set, update } = writable(getData());
+    const { subscribe, update } = writable(getData());
 
     return {
         subscribe,
         updateBoard: (newBoard: Column[]) => {
-            updateData(newBoard);
+            saveData(newBoard);
             update(board => board = newBoard);
         }
     };
@@ -110,7 +110,7 @@ const getData = (): Column[] => {
     return defaultData;
 }
 
-const updateData = (data: Column[]) => {
+const saveData = (data: Column[]) => {
     try {
         localStorage.setItem('kanban-items', JSON.stringify(data));
     } catch (error) {

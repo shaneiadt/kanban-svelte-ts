@@ -2,7 +2,7 @@
 	import type { Column } from '../../../interfaces';
 
     export let column: Column;
-    console.log(column);
+    // console.log(column);
 </script>
 
 <li class={`drag-column rounded-lg relative flex-1 overflow-x-hidden mx-1 bg-black bg-opacity-40 ${column.cssClass}-column`}>

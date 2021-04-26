@@ -1,34 +1,47 @@
 <script lang="typescript">
-	import type { Column } from '../../../interfaces';
+	import type { Column, Item } from '../../../interfaces';
+    import { store } from '../../../store';
 
     export let column: Column;
 
-    function drag(e: Event){
-        console.log('DRAG', e.target);
+    let draggedFrom: { fromColumn: Column, itemDragged: Item } | null = null;
+
+    function drag(e: DragEvent){
+        if(e.dataTransfer && e.target){
+            const target = e.target as HTMLLIElement;
+
+            if(target.textContent){
+                e.dataTransfer.setData("text", target.textContent);
+            }
+        }
     }
 
     function allowDrop(e: Event){
         e.preventDefault();
     }
 
-    function drop(e: Event){
+    function drop(e: DragEvent){
         e.preventDefault();
+
+        if(!e.dataTransfer) return;
+        
+        console.log(e.dataTransfer.getData('text'));
+
+        const data = [...$store];
+
+        for(let col of data){
+            const el = document.querySelector(`#${col.cssClass}-list`) as HTMLUListElement;
+
+            el.classList.remove('over');
+        }
+
+        // draggedFrom = null;
     }
 
-    function dragEnter(e: Event, column: Column){
-        console.log('ENTER', {event:e, column});
+    function dragEnter(column: Column){
         const list = document.querySelector(`#${column.cssClass}-list`) as HTMLUListElement;
-        console.log(list);
 
         list.classList.add('over');
-    }
-    
-    function dragLeave(e: Event, column: Column){
-        console.log('LEAVE', {event:e, column});
-        const list = document.querySelector(`#${column.cssClass}-list`) as HTMLUListElement;
-        console.log(list);
-
-        list.classList.remove('over');
     }
 </script>
 
@@ -37,7 +50,7 @@
         <h1 class="p-2">{column.title}</h1>
     </span>
     <div id={`${column.cssClass}-content`} class="custom-scroll">
-        <ul class="drag-item-list" id={`${column.cssClass}-list`} on:drop={drop} on:dragover={allowDrop} on:dragenter={(e) => dragEnter(e, column)} on:dragleave={(e) => dragLeave(e, column)}>
+        <ul class="drag-item-list" id={`${column.cssClass}-list`} on:drop={drop} on:dragover={allowDrop} on:dragenter={() => dragEnter(column)}>
             {#each column.items as item, i}
                 <li class="drag-item" draggable="true" on:dragstart={drag}>{item.title}</li>
             {/each}

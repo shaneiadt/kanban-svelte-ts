@@ -4,15 +4,15 @@
 
     export let column: Column;
 
-    let draggedFrom: { fromColumn: Column, itemDragged: Item } | null = null;
-
     function drag(e: DragEvent){
         if(e.dataTransfer && e.target){
             const target = e.target as HTMLLIElement;
+            const id = target.getAttribute('data-item-id');
 
-            if(target.textContent){
-                e.dataTransfer.setData("text", target.textContent);
-            }
+            if(!id) return;
+
+            console.log(id);
+            e.dataTransfer.setData("text", id);
         }
     }
 
@@ -20,12 +20,26 @@
         e.preventDefault();
     }
 
+    function findItemColumn(id: string) {
+        return [...$store].filter(col => {
+            const find = col.items.find(i => i.id.toString() === id);
+
+            if(find) return find;
+        })[0];
+    }
+
     function drop(e: DragEvent){
         e.preventDefault();
 
-        if(!e.dataTransfer) return;
-        
-        console.log(e.dataTransfer.getData('text'));
+        const moveToColumn = e.target as Element;
+
+        if(!e.dataTransfer || !moveToColumn.parentElement) return;
+
+        const itemId = e.dataTransfer.getData('text');
+
+        console.log(moveToColumn.parentElement.getAttribute('id'), itemId, findItemColumn(itemId));
+
+        const movedItem = findItemColumn(itemId).items.filter(i => i.id.toString() === itemId);
 
         const data = [...$store];
 
@@ -33,9 +47,23 @@
             const el = document.querySelector(`#${col.cssClass}-list`) as HTMLUListElement;
 
             el.classList.remove('over');
+
+            if(`${col.cssClass}-content` === moveToColumn.parentElement.getAttribute('id')){
+                col.items = [
+                    ...col.items,
+                    ...movedItem
+                ];
+                /*data.forEach(c => {
+                    const index = c.items.findIndex(dc => dc.id.toString() === itemId);
+
+                    c.items = [
+                        ...c.items.filter(i => i.id.toString() !== itemId)
+                    ];
+                });*/
+            }
         }
 
-        // draggedFrom = null;
+        store.updateBoard(data);
     }
 
     function dragEnter(column: Column){
@@ -52,7 +80,7 @@
     <div id={`${column.cssClass}-content`} class="custom-scroll">
         <ul class="drag-item-list" id={`${column.cssClass}-list`} on:drop={drop} on:dragover={allowDrop} on:dragenter={() => dragEnter(column)}>
             {#each column.items as item, i}
-                <li class="drag-item" draggable="true" on:dragstart={drag}>{item.title}</li>
+                <li class="drag-item" data-item-id={item.id} draggable="true" on:dragstart={drag}>{item.title}</li>
             {/each}
         </ul>
     </div>

@@ -8,9 +8,11 @@ const defaultData: Column[] = [
         cssClass: 'backlog',
         items: [
             {
+                id: 1,
                 title: 'Test'
             },
             {
+                id: 2,
                 title: 'Testing'
             }
         ]
@@ -20,41 +22,21 @@ const defaultData: Column[] = [
         cssClass: 'progress',
         items: [
             {
+                id: 3,
                 title: 'Test'
             },
             {
+                id: 4,
                 title: 'Test'
             },
             {
+                id: 5,
                 title: 'Test'
             },
             {
+                id: 6,
                 title: 'Test'
             },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            },
-            {
-                title: 'Test'
-            }
         ]
     },
     {
@@ -62,9 +44,11 @@ const defaultData: Column[] = [
         cssClass: 'complete',
         items: [
             {
+                id: 7,
                 title: 'Test'
             },
             {
+                id: 8,
                 title: 'Test'
             }
         ]
@@ -74,9 +58,11 @@ const defaultData: Column[] = [
         cssClass: 'on-hold',
         items: [
             {
+                id: 9,
                 title: 'Test'
             },
             {
+                id: 10,
                 title: 'Test'
             }
         ]

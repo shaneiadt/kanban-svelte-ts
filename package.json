@@ -5,7 +5,7 @@
     "ts-check": "svelte-check"
   },
   "dependencies": {
-    "svelte": "^3.32.1"
+    "svelte": "^3.49.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^2.0.0",
